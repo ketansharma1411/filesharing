@@ -1,0 +1,470 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+
+    <style>
+        /* General Styles */
+        html{
+            height: 100%;
+        }
+        body {
+            height: 100%;
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            margin: 110px auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+            z-index: 1000;
+        }
+
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .navbar-brand {
+            font-size: 1.8rem;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .navbar-menu {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        .navbar-menu li {
+            margin-left: 20px;
+        }
+
+        .navbar-menu a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-menu a:hover {
+            color: #ff5c8d;
+        }
+
+        /* Form Styles */
+        .download-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-size: 1rem;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"] {
+            padding: 12px;
+            font-size: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            border-color: #007BFF;
+            outline: none;
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            padding: 15px 25px;
+            font-size: 1.2rem;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        .submit-btn:active {
+            background-color: #00408f;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            margin-top: auto;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            .navbar-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .navbar-menu {
+                display: block;
+                margin-top: 15px;
+            }
+
+            .navbar-menu li {
+                margin: 10px 0;
+            }
+        }
+
+
+    </style>
+</head>
+<body>
+    
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="#" class="navbar-brand">FileShare</a>
+            <ul class="navbar-menu">
+                <li><a href="{% url 'about' %}">About</a></li>
+                <li><a href="{% url 'upload_file' %}">Upload</a></li>
+                <li><a href="{% url 'display_files' %}">Recieve</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    
+    <div class="container">
+        <h1 class="heading">Download Your File</h1>
+        <form method="post" class="download-form">
+            {% csrf_token %}
+            <div class="input-group">
+                <label for="file_id">Enter File ID</label>
+                <input type="text" id="file_id" name="file_id" placeholder="Enter the file ID" required>
+            </div>
+            <button type="submit" class="submit-btn">Download</button>
+        </form>
+    </div>
+
+    
+    <footer>
+        <div class="footer-container">
+            <p>&copy; 2025 FileShare. All Rights Reserved.</p>
+        </div>
+    </footer>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Files</title>
+    <style>
+        /* Global Styles */
+        html{
+            height: 100%;
+        }
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f2f5;  
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;  
+            display: flex;
+            flex-direction: column;
+
+
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+        }
+
+        .navbar-container {
+            width: 90%;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-brand {
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .navbar-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+
+        .navbar-menu li {
+            margin: 0 15px;
+        }
+
+        .navbar-menu a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        .navbar-menu a:hover {
+            color: #ff9800;
+        }
+
+        /* Main Content */
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            margin: 80px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        h3 {
+            margin-top: 30px;
+            font-size: 20px;
+            color: #333;
+            text-align: center;
+        }
+
+        ul.error-messages {
+            list-style: none;
+            padding: 0;
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        form {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        label {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            font-size: 14px;
+            width: 400px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            transition: border 0.3s;
+        }
+
+        input[type="text"]:focus {
+            border: 1px solid #007BFF;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #007BFF;
+        }
+
+        ul.file-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        ul.file-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        ul.file-list li form {
+            margin: 0;
+        }
+
+        ul.file-list li button {
+            background-color: #4CAF50;
+            padding: 8px 16px;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 5px;
+            border: none;
+            transition: background-color 0.3s;
+        }
+
+        ul.file-list li button:hover {
+            background-color: #45a049;
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            margin-top: auto;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 14px;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="navbar-container">
+            <a href="#" class="navbar-brand">FileShare</a>
+            <ul class="navbar-menu">
+                <li><a href="{% url 'about' %}">About</a></li>
+                <li><a href="{% url 'upload_file' %}">Upload</a></li>
+                <li><a href="{% url 'display_files' %}">Recieve</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h1>Download Files</h1>
+
+        <!-- Display error messages -->
+        {% if messages %}
+            <ul class="error-messages">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+            <label for="file_id">Enter File ID:</label>
+            <input type="text" id="file_id" name="file_id" value="{{ file_id }}">
+            <button type="submit">Search Files</button>
+        </form>
+
+        {% if files %}
+            <h3>Files associated with ID: {{ file_id }}</h3>
+            <ul class="file-list">
+                {% for file in files %}
+                    <li>
+                        {{ file.file.name }}
+                        <form action="{% url 'download_file' file_id file.id  %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="file_id" value="{{ file_id }}">
+                            <button type="submit">Download</button>
+                        </form>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 FileShare. All rights reserved.</p>
+    </footer>
+</body>
+</html>
+

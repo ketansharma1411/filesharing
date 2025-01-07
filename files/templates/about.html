@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - FileShare</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1, h2, h3 {
+            color: #333;
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+            z-index: 1000;
+        }
+
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .navbar-brand {
+            font-size: 1.8rem;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .navbar-menu {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        .navbar-menu li {
+            margin-left: 20px;
+        }
+
+        .navbar-menu a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-menu a:hover {
+            color: #ff5c8d;
+        }
+
+        /* About Section */
+        .about-container {
+            padding: 80px 20px 20px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .about-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .about-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .about-header p {
+            font-size: 1.2rem;
+            color: #777;
+        }
+
+        /* Features */
+        .features {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 50px;
+            gap: 9px;
+        }
+
+        .feature-item {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 30%;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-item i {
+            font-size: 3rem;
+            color: #007BFF;
+            margin-bottom: 15px;
+        }
+
+        .feature-item h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .feature-item p {
+            font-size: 1rem;
+            color: #555;
+        }
+
+        /* Steps */
+        .steps {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .step {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .step h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        .step p {
+            font-size: 1.2rem;
+            color: #555;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .features {
+                flex-direction: column;
+            }
+
+            .feature-item {
+                width: 100%;
+                margin-bottom: 30px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="#" class="navbar-brand">FileShare</a>
+            <ul class="navbar-menu">
+                <li><a href="{% url 'about' %}">About</a></li>
+                <li><a href="{% url 'upload_file' %}">Upload</a></li>
+                <li><a href="{% url 'display_files' %}">Recieve</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- About Section -->
+    <div class="about-container">
+        <div class="about-header">
+            <h1>About FileShare</h1>
+            <p>Your secure and easy-to-use file-sharing solution!</p>
+        </div>
+
+        <h2>Features</h2>
+        <div class="features">
+            <div class="feature-item">
+                <i class="fas fa-upload"></i>
+                <h3>Easy File Upload</h3>
+                <p>Upload any type of file quickly and securely. Share it using a unique file ID.</p>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-download"></i>
+                <h3>Fast File Download</h3>
+                <p>Receive files instantly by entering the unique ID shared by the sender.</p>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-shield-alt"></i>
+                <h3>Secure</h3>
+                <p>Files are stored securely and are accessible only with the right file ID.</p>
+            </div>
+        </div>
+
+        <div class="steps">
+            <h2>How to Use FileShare</h2>
+            <div class="step">
+                <h3>Step 1: Upload Your File</h3>
+                <p>Go to the <strong>Upload</strong> page, fill in your project name, and select the file you want to upload. Once uploaded, a unique ID will be generated that you can share with the receiver.</p>
+            </div>
+            <div class="step">
+                <h3>Step 2: Share the File ID</h3>
+                <p>Send the unique file ID to the person you want to share the file with.</p>
+            </div>
+            <div class="step">
+                <h3>Step 3: Download the File</h3>
+                <p>On the <strong>Download</strong> page, enter the file ID shared by the sender, and your file will be ready for download.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <p>&copy; 2025 FileShare. All Rights Reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
