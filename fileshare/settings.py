@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
+from decouple import config
 
 import os
 # import dj_database_url
@@ -27,12 +28,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = os.environ.get('SECRET_KEY')
-SECRET_KEY = 'django-insecure-+f2(8^z8)u9e@dk!(*n%kaa=f_))657#&&m5h)e4!hhp9um3&y'
+SECRET_KEY = config('SECRET_KEY')
+# SECRET_KEY = 'django-insecure-+f2(8^z8)u9e@dk!(*n%kaa=f_))657#&&m5h)e4!hhp9um3&y'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = os.environ.get('DEBUG')
-DEBUG=True
+DEBUG = config('DEBUG')
+# DEBUG=True
 
 ALLOWED_HOSTS = ['*']
 
@@ -159,11 +160,14 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-AWS_ACCESS_KEY_ID = 'AKIA5FTZBMTJ2LO33B4X'
-AWS_SECRET_ACCESS_KEY = '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'
-AWS_STORAGE_BUCKET_NAME = 'fileshare1411'
+
+AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
+AWS_S3_REGION_NAME = config('AWS_S3_REGION_NAME')
+
+
 AWS_S3_SIGNATURE_NAME = 's3v4',
-AWS_S3_REGION_NAME = 'eu-north-1'
 AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL =  None
 AWS_S3_VERITY = True
