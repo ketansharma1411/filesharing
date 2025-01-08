@@ -35,7 +35,7 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG')
 # DEBUG=True
 
-ALLOWED_HOSTS = ['51.20.7.246','localhost','127.0.0.1','0.0.0.0']
+ALLOWED_HOSTS = ['51.20.7.246','localhost','127.0.0.1','0.0.0.0','filezap.duckdns.org']
 
 
 # Application definition
