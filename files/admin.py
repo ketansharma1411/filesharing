@@ -6,6 +6,6 @@ from .models import FileUpload
 
 class FileUploadAdmin(admin.ModelAdmin):
     # Add 'id' to the list_display to show it in the admin list view
-    list_display = ('id', 'project_name', 'file', 'uploaded_at')
+    list_display = ('id', 'project_name', 'file', 'uploaded_at','file_url')
 
 admin.site.register(FileUpload, FileUploadAdmin)
