@@ -13,6 +13,7 @@ from botocore.exceptions import NoCredentialsError, PartialCredentialsError
 import uuid
 
 from django.core.files.storage import default_storage
+from storages.backends.s3boto3 import S3Boto3Storage
 def upload_file(request):
     if request.method == 'POST':
         form = FileUploadForm(request.POST, request.FILES)
@@ -21,13 +22,17 @@ def upload_file(request):
             file_id = str(uuid.uuid4())  # Generate a unique file ID
             files = request.FILES.getlist('file')  # Handle multiple files
 
+            s3_storage = S3Boto3Storage()  # Create an instance of S3 storage
+
             for file in files:
                 # This is to directly upload the file in s3 bucket
 
                 file_name = f'uploads/{file.name}'  
-                file_path = default_storage.save(file_name, file)  
-                file_url = default_storage.url(file_path) 
+                # file_path = default_storage.save(file_name, file)  
+                # file_url = default_storage.url(file_path) 
                 # print("file url to s3 bucket",file_url) 
+                file_path = s3_storage.save(file_name, file)  
+                file_url = s3_storage.url(file_path)  # Get the S3 URL
 
                 # Create a record in the database with the file path (URL)
                 FileUpload.objects.create(
