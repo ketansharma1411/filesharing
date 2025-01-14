@@ -14,6 +14,9 @@ import uuid
 
 from django.core.files.storage import default_storage
 from storages.backends.s3boto3 import S3Boto3Storage
+from urllib.parse import quote,unquote
+from urllib.parse import urlparse
+
 def upload_file(request):
     if request.method == 'POST':
         form = FileUploadForm(request.POST, request.FILES)
@@ -72,47 +75,6 @@ def display_files(request):
     # If GET request, just render the empty form
     return render(request, 'download_file.html')
 
-# def download_file(request, file_id, ID):
-#     # Get the file object for the given file_id and ID
-#     file_to_download = get_object_or_404(FileUpload, file_id=file_id, id=ID)
-    
-#     # Get the S3 URL of the file
-#     file_url = file_to_download.file.url
-#     print(file_url)
-
-#     # return HttpResponseRedirect(file_url)
-
-#     # Extract the bucket name and file key from the URL (assuming the URL format is standard)
-#     bucket_name = config('AWS_STORAGE_BUCKET_NAME')
-#     file_key = file_to_download.file.name  # The file path in your S3 bucket
-
-#     # Create an S3 client
-#     s3 = boto3.client(
-#             's3',
-#             aws_access_key_id=config('AWS_ACCESS_KEY_ID'),
-#             aws_secret_access_key=config('AWS_SECRET_ACCESS_KEY'),
-#             region_name= config('AWS_S3_REGION_NAME')
-#         )
-
-#     # Try to fetch the file from S3 and stream it
-#     try:
-#         # S3 has a method to get the file as a stream
-#         s3_object = s3.get_object(Bucket=bucket_name, Key=file_key)
-
-#         # The file content will be streamed directly to the client
-#         file_stream = s3_object['Body']
-
-#         # Create a StreamingHttpResponse with the file stream and the appropriate headers
-#         response = StreamingHttpResponse(file_stream, content_type='application/octet-stream')
-#         response['Content-Disposition'] = f'attachment; filename="{file_to_download.file.name}"'
-#         return response
-#     except (NoCredentialsError, PartialCredentialsError):
-#         return HttpResponse("Error: AWS credentials are missing or invalid.", status=400)
-#     except Exception as e:
-#         return HttpResponse(f"Error downloading file: {str(e)}", status=500)
-
-
-from urllib.parse import urlparse
 
 def download_file(request, file_id, ID):
     # Get the file object for the given file_id and ID
@@ -120,11 +82,12 @@ def download_file(request, file_id, ID):
     
     # Get the S3 URL of the file from the database (already saved)
     file_url = file_to_download.file_url
-    # print(f"File URL from DB: {file_url}")
+    
     # Extract bucket name and file key from the URL (excluding query params)
     parsed_url = urlparse(file_url)
     file_key = parsed_url.path.lstrip('/')  # Remove leading '/' from path to get file key
-    # print('this is the file_key')
+    file_key=unquote(file_key)  # Decode the URL-encoded file key
+    # print('this is the file_key',file_key)
 
 
     # Create an S3 client (use the same S3 credentials)
