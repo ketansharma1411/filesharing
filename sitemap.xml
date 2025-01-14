@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <!-- Home page -->
+  <url>
+    <loc>https://filezap.duckdns.org/</loc>
+    <lastmod>2025-01-14</lastmod>
+    <priority>1.00</priority>
+  </url>
+  
+  <!-- File about page -->
+  <url>
+    <loc>https://filezap.duckdns.org/about/</loc>
+    <lastmod>2025-01-14</lastmod>
+    <priority>0.80</priority>
+  </url>
+
+  <!-- Download page -->
+  <url>
+    <loc>https://filezap.duckdns.org/display/</loc>
+    <lastmod>2025-01-14</lastmod>
+    <priority>0.50</priority>
+  </url>
+
+</urlset>

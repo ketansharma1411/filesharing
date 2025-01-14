@@ -1,0 +1,11 @@
+# Allow all bots to crawl all content on the site
+User-agent: *
+Disallow: /admin/                # Disallow crawling of the admin section
+
+
+# Allow Googlebot full access
+User-agent: Googlebot
+Disallow:
+
+# Sitemap location
+Sitemap: https://filezap.duckdns.org/sitemap.xml
