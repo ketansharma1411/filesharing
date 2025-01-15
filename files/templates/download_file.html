@@ -248,7 +248,11 @@
             <ul class="file-list">
                 {% for file in files %}
                     <li>
+                        {% if file.file.name %}
                         {{ file.file.name }}
+                        {% else %}
+                        fileshare_file.zip
+                        {% endif %}
                         <form action="{% url 'download_file' file_id file.id  %}" method="post">
                             {% csrf_token %}
                             <input type="hidden" name="file_id" value="{{ file_id }}">

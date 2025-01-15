@@ -258,7 +258,12 @@
             </div>
             <div class="input-group">
                 <label for="file">Choose File</label>
-                <input type="file" id="file" name="file" multiple required>
+                <input type="file" id="file" name="file" multiple >
+            </div>
+            <div class="input-group">
+                <label for="file">Choose Folder</label>
+                <input type="file" id="folder" name="file" 
+                webkitdirectory>
             </div>
             <button type="submit" class="submit-btn">Upload</button>
         </form>
@@ -326,5 +331,10 @@
             });
         });
     </script>
+
+    
+
+
+
 </body>
 </html>

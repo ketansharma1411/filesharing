@@ -16,34 +16,71 @@ from django.core.files.storage import default_storage
 from storages.backends.s3boto3 import S3Boto3Storage
 from urllib.parse import quote,unquote
 from urllib.parse import urlparse
+import zipfile
+import io
 
 def upload_file(request):
     if request.method == 'POST':
         form = FileUploadForm(request.POST, request.FILES)
         project_name=request.POST.get('project_name')
+
+        # make project name safe
+        temp_name=project_name.split(' ')
+        project_name='_'.join(temp_name)
+        
         if form.is_valid():
             file_id = str(uuid.uuid4())  # Generate a unique file ID
             files = request.FILES.getlist('file')  # Handle multiple files
+            if len(files)==0:
+                return JsonResponse({'success': False, 'error': 'Please choose at least one file or folder before submitting.'})
+
+
 
             s3_storage = S3Boto3Storage()  # Create an instance of S3 storage
+            total_size = sum(file.size for file in files)
 
-            for file in files:
-                # This is to directly upload the file in s3 bucket
+            if total_size>200 * 1024 * 1024 and len(files)>1:
+                # Create a ZIP file in memory
+                zip_buffer = io.BytesIO()
+                with zipfile.ZipFile(zip_buffer, 'w', zipfile.ZIP_DEFLATED) as zip_file:
+                    for file in files:
+                        # Add each file to the zip
+                        zip_file.writestr(file.name, file.read())
 
-                file_name = f'uploads/{file.name}'  
-                # file_path = default_storage.save(file_name, file)  
-                # file_url = default_storage.url(file_path) 
-                # print("file url to s3 bucket",file_url) 
-                file_path = s3_storage.save(file_name, file)  
-                file_url = s3_storage.url(file_path)  # Get the S3 URL
+                
+                zip_file_name = f'uploads/{project_name}/{file_id}/{project_name}.zip'  # Define the S3 path
+                zip_buffer.seek(0)  # Seek to the beginning of the buffer before uploading
 
-                # Create a record in the database with the file path (URL)
+                # Save the ZIP file to S3
+                folder_path=s3_storage.save(zip_file_name, zip_buffer)
+                file_url = s3_storage.url(folder_path)  
+
+                # Create a record in the database with the ZIP file URL
                 FileUpload.objects.create(
                     file_id=file_id,
-                    file=file,
+                    file=None,  # No actual file, we have a zip URL instead
                     project_name=project_name,
-                    file_url=file_url
+                    file_url=file_url  # Store the URL of the uploaded ZIP file
                 )
+            else:
+                for file in files:
+
+                    # This is to directly upload the file in s3 bucket
+
+                    file_name = f'uploads/{project_name}/{file_id}/{file.name}'  
+                    # file_path = default_storage.save(file_name, file)  
+                    # file_url = default_storage.url(file_path) 
+                    # print("file url to s3 bucket",file_url) 
+                    file_path = s3_storage.save(file_name, file)  
+                    file_url = s3_storage.url(file_path)  # Get the S3 URL
+
+                    # Create a record in the database with the file path (URL)
+                    FileUpload.objects.create(
+                        file_id=file_id,
+                        file=file,
+                        project_name=project_name,
+                        file_url=file_url
+                    )
 
 
 
@@ -112,7 +149,11 @@ def download_file(request, file_id, ID):
 
         # Create a StreamingHttpResponse with the file stream and appropriate headers
         response = StreamingHttpResponse(file_stream, content_type='application/octet-stream')
-        response['Content-Disposition'] = f'attachment; filename="{file_to_download.file.name}"'
+        download_file_name=file_to_download.file.name
+        if download_file_name is None or download_file_name == '' or file_to_download.file is None:
+            download_file_name='fileshare_file.zip'
+        print('this is the download_file_name',download_file_name)
+        response['Content-Disposition'] = f'attachment; filename="{download_file_name}"'
         return response
     except (NoCredentialsError, PartialCredentialsError):
         return HttpResponse("Error: AWS credentials are missing or invalid.", status=400)
