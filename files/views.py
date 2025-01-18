@@ -93,7 +93,7 @@ def upload_file(request):
     else:
         form = FileUploadForm()
 
-    return render(request, 'upload.html', {'form': form})
+    return render(request, 'upload_page_v2.html', {'form': form})
 
 def display_files(request):
     if request.method == 'POST':
@@ -104,13 +104,13 @@ def display_files(request):
         if not files.exists():
             # If no files are found with the entered ID, show an error message
             messages.error(request, 'No files found with this ID. Please check and try again.')
-            return render(request, 'download_file.html')
+            return render(request, 'download_page_v2.html')
         
         # Render the page with the list of files
-        return render(request, 'download_file.html', {'files': files, 'file_id': file_id})
+        return render(request, 'download_page_v2.html', {'files': files, 'file_id': file_id})
 
     # If GET request, just render the empty form
-    return render(request, 'download_file.html')
+    return render(request, 'download_page_v2.html')
 
 
 def download_file(request, file_id, ID):
@@ -161,9 +161,23 @@ def download_file(request, file_id, ID):
         return HttpResponse(f"Error downloading file: {str(e)}", status=500)
 
 def about(request):
-    return render(request, 'about.html')
+    return render(request, 'home_page_v2.html')
+
 def upload_success(request,file_id):
-    return render(request, 'upload_success.html', {'file_id': file_id})
+    return render(request, 'upload_success_page_v2.html', {'file_id': file_id})
+
+def community(request):
+    return render(request, 'community_page_v2.html')
+
+def privacy(request):
+    return render(request, 'privacy_page_v2.html')
+
+def termsCondition(r):
+    return render(r, 'terms_condition_page_v2.html')
+
+def testing_design(r):
+    return render(r, 'home_page_v2.html')
+
 
 # This is to test S3 bucket upload test
 def testing(request):
