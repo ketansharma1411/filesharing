@@ -93,6 +93,13 @@
           #navbarMenu{
             margin-top: -1px;
           }
+          #navbar{
+            gap: 1.4rem;
+          }
+        }
+        #navbar{
+          padding-top: 5px;
+          gap: 1.9rem;
         }
     </style>
   </head>
@@ -144,7 +151,7 @@
             class="flex flex-wrap justify-center md:justify-end gap-4 md:gap-8 mt-4 md:mt-0 md:flex md:flex-row "
             id="navbarMenu"
           >
-            <nav class="flex items-center gap-6" style="padding-top: 5px;gap: 1.9rem;">
+            <nav class="flex items-center gap-6" id="navbar">
               <a class="text-[#111418] text-sm font-medium" href="{% url 'about' %}">Home</a>
               <a class="text-[#111418] text-sm font-medium" href="{% url 'upload_file' %}">Upload</a>
               <a class="text-[#111418] text-sm font-medium" href="{% url 'display_files' %}">Download</a>
