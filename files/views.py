@@ -176,7 +176,7 @@ def termsCondition(r):
     return render(r, 'terms_condition_page_v2.html')
 
 def testing_design(r):
-    return render(r, 'home_page_v2.html')
+    return render(r, 'upload_success_page_v2.html')
 
 
 # This is to test S3 bucket upload test

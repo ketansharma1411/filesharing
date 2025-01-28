@@ -8,9 +8,9 @@
     <priority>1.00</priority>
   </url>
   
-  <!-- File about page -->
+  <!-- File upload page -->
   <url>
-    <loc>https://filezap.duckdns.org/about/</loc>
+    <loc>https://filezap.duckdns.org/upload_file</loc>
     <lastmod>2025-01-14</lastmod>
     <priority>0.80</priority>
   </url>
@@ -22,4 +22,24 @@
     <priority>0.50</priority>
   </url>
 
+  <!-- Terms and Conditions page -->
+  <url>
+    <loc>https://filezap.duckdns.org/privacy_policy</loc>
+    <lastmod>2025-01-14</lastmod>
+    <priority>0.50</priority>
+  </url>
+
+  <url>
+    <loc>https://filezap.duckdns.org/terms_of_service</loc>
+    <lastmod>2025-01-14</lastmod>
+    <priority>0.50</priority>
+  </url>
+
+  <!-- Community page -->
+  <url>
+    <loc>https://filezap.duckdns.org/community</loc>
+    <lastmod>2025-01-14</lastmod>
+    <priority>0.50</priority>
+  </url>
+  
 </urlset>
