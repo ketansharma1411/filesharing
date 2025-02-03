@@ -79,9 +79,17 @@
             siblings.each(function() {
                 const elm = $(this);
                 elm.attr('href', elm.attr('data-href-template').replace('__fk__', value));
+<<<<<<< HEAD
+                elm.removeAttr('aria-disabled');
             });
         } else {
             siblings.removeAttr('href');
+            siblings.attr('aria-disabled', true);
+=======
+            });
+        } else {
+            siblings.removeAttr('href');
+>>>>>>> 19513a968a8bdf6a70bd65e8148cb99bf9a05372
         }
     }
 
@@ -94,8 +102,13 @@
         // Extract the model from the popup url '.../<model>/add/' or
         // '.../<model>/<id>/change/' depending the action (add or change).
         const modelName = path.split('/')[path.split('/').length - (objId ? 4 : 3)];
+<<<<<<< HEAD
+        // Select elements with a specific model reference and context of "available-source".
+        const selectsRelated = document.querySelectorAll(`[data-model-ref="${modelName}"] [data-context="available-source"]`);
+=======
         // Exclude autocomplete selects.
         const selectsRelated = document.querySelectorAll(`[data-model-ref="${modelName}"] select:not(.admin-autocomplete)`);
+>>>>>>> 19513a968a8bdf6a70bd65e8148cb99bf9a05372
 
         selectsRelated.forEach(function(select) {
             if (currentSelect === select) {

@@ -1,6 +1,25 @@
 /* SELECTOR (FILTER INTERFACE) */
 
 .selector {
+<<<<<<< HEAD
+    display: flex;
+    flex-grow: 1;
+    gap: 0 10px;
+}
+
+.selector select {
+    height: 17.2em;
+    flex: 1 0 auto;
+    overflow: scroll;
+    width: 100%;
+}
+
+.selector-available, .selector-chosen {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    flex: 1 1;
+=======
     width: 800px;
     float: left;
     display: flex;
@@ -18,6 +37,7 @@
     margin-bottom: 5px;
     display: flex;
     flex-direction: column;
+>>>>>>> 19513a968a8bdf6a70bd65e8148cb99bf9a05372
 }
 
 .selector-available h2, .selector-chosen h2 {
@@ -41,7 +61,11 @@
 }
 
 .selector-chosen h2 {
+<<<<<<< HEAD
+    background: var(--secondary);
+=======
     background: var(--primary);
+>>>>>>> 19513a968a8bdf6a70bd65e8148cb99bf9a05372
     color: var(--header-link-color);
 }
 
@@ -58,6 +82,10 @@
     font-size: 0.625rem;
     margin: 0;
     text-align: left;
+<<<<<<< HEAD
+    display: flex;
+=======
+>>>>>>> 19513a968a8bdf6a70bd65e8148cb99bf9a05372
 }
 
 .selector .selector-filter label,
@@ -69,11 +97,22 @@
     padding: 0;
     overflow: hidden;
     line-height: 1;
+<<<<<<< HEAD
+    min-width: auto;
+}
+
+.selector-filter input {
+    flex-grow: 1;
+=======
+>>>>>>> 19513a968a8bdf6a70bd65e8148cb99bf9a05372
 }
 
 .selector .selector-available input,
 .selector .selector-chosen input {
+<<<<<<< HEAD
+=======
     width: 320px;
+>>>>>>> 19513a968a8bdf6a70bd65e8148cb99bf9a05372
     margin-left: 8px;
 }
 
@@ -82,7 +121,11 @@
     width: 22px;
     background-color: var(--selected-bg);
     border-radius: 10px;
+<<<<<<< HEAD
+    margin: 0;
+=======
     margin: 0 5px;
+>>>>>>> 19513a968a8bdf6a70bd65e8148cb99bf9a05372
     padding: 0;
     transform: translateY(-17px);
 }
@@ -146,7 +189,11 @@ a.selector-chooseall, a.selector-clearall {
     display: inline-block;
     height: 16px;
     text-align: left;
+<<<<<<< HEAD
+    margin: 0 auto;
+=======
     margin: 1px auto 3px;
+>>>>>>> 19513a968a8bdf6a70bd65e8148cb99bf9a05372
     overflow: hidden;
     font-weight: bold;
     line-height: 16px;
@@ -368,10 +415,13 @@ p.file-upload {
     font-weight: bold;
 }
 
+<<<<<<< HEAD
+=======
 .aligned p.file-upload {
     margin-left: 170px;
 }
 
+>>>>>>> 19513a968a8bdf6a70bd65e8148cb99bf9a05372
 .file-upload a {
     font-weight: normal;
 }
@@ -450,7 +500,11 @@ span.clearable-file-input label {
 }
 
 .calendar td.selected a {
+<<<<<<< HEAD
+    background: var(--secondary);
+=======
     background: var(--primary);
+>>>>>>> 19513a968a8bdf6a70bd65e8148cb99bf9a05372
     color: var(--button-fg);
 }
 
@@ -518,6 +572,11 @@ span.clearable-file-input label {
     background: url(../img/calendar-icons.svg) 0 0 no-repeat;
 }
 
+<<<<<<< HEAD
+.calendarnav-next {
+    right: 10px;
+    background: url(../img/calendar-icons.svg) 0 -15px no-repeat;
+=======
 .calendarbox .calendarnav-previous:focus,
 .calendarbox .calendarnav-previous:hover {
     background-position: 0 -15px;
@@ -531,12 +590,26 @@ span.clearable-file-input label {
 .calendarbox .calendarnav-next:focus,
 .calendarbox .calendarnav-next:hover {
     background-position: 0 -45px;
+>>>>>>> 19513a968a8bdf6a70bd65e8148cb99bf9a05372
 }
 
 .calendar-cancel {
     margin: 0;
     padding: 4px 0;
     font-size: 0.75rem;
+<<<<<<< HEAD
+    background: var(--close-button-bg);
+    border-top: 1px solid var(--border-color);
+    color: var(--button-fg);
+}
+
+.calendar-cancel:focus, .calendar-cancel:hover {
+    background: var(--close-button-hover-bg);
+}
+
+.calendar-cancel a {
+    color: var(--button-fg);
+=======
     background: #eee;
     border-top: 1px solid var(--border-color);
     color: var(--body-fg);
@@ -548,6 +621,7 @@ span.clearable-file-input label {
 
 .calendar-cancel a {
     color: black;
+>>>>>>> 19513a968a8bdf6a70bd65e8148cb99bf9a05372
     display: block;
 }
 
@@ -578,6 +652,23 @@ ul.timelist, .timelist li {
 
 /* RELATED WIDGET WRAPPER */
 .related-widget-wrapper {
+<<<<<<< HEAD
+    display: flex;
+    gap: 0 10px;
+    flex-grow: 1;
+    flex-wrap: wrap;
+    margin-bottom: 5px;
+}
+
+.related-widget-wrapper-link {
+    opacity: .6;
+    filter: grayscale(1);
+}
+
+.related-widget-wrapper-link:link {
+    opacity: 1;
+    filter: grayscale(0);
+=======
     float: left;       /* display properly in form rows with multiple fields */
     overflow: hidden;  /* clear floated contents */
 }
@@ -598,6 +689,7 @@ ul.timelist, .timelist li {
 select + .related-widget-wrapper-link,
 .related-widget-wrapper-link + .related-widget-wrapper-link {
     margin-left: 7px;
+>>>>>>> 19513a968a8bdf6a70bd65e8148cb99bf9a05372
 }
 
 /* GIS MAPS */

@@ -24,6 +24,12 @@ form .form-row p {
 
 .flex-container {
     display: flex;
+<<<<<<< HEAD
+}
+
+.form-multiline {
+=======
+>>>>>>> 19513a968a8bdf6a70bd65e8148cb99bf9a05372
     flex-wrap: wrap;
 }
 
@@ -41,7 +47,10 @@ label {
 
 .required label, label.required {
     font-weight: bold;
+<<<<<<< HEAD
+=======
     color: var(--body-fg);
+>>>>>>> 19513a968a8bdf6a70bd65e8148cb99bf9a05372
 }
 
 /* RADIO BUTTONS */
@@ -73,21 +82,47 @@ form ul.inline li {
     padding-right: 7px;
 }
 
+<<<<<<< HEAD
+/* FIELDSETS */
+
+fieldset .fieldset-heading,
+fieldset .inline-heading,
+:not(.inline-related) .collapse summary {
+    border: 1px solid var(--header-bg);
+    margin: 0;
+    padding: 8px;
+    font-weight: 400;
+    font-size: 0.8125rem;
+    background: var(--header-bg);
+    color: var(--header-link-color);
+}
+
+=======
+>>>>>>> 19513a968a8bdf6a70bd65e8148cb99bf9a05372
 /* ALIGNED FIELDSETS */
 
 .aligned label {
     display: block;
     padding: 4px 10px 0 0;
+<<<<<<< HEAD
+    min-width: 160px;
+    width: 160px;
+    word-wrap: break-word;
+=======
     width: 160px;
     word-wrap: break-word;
     line-height: 1;
+>>>>>>> 19513a968a8bdf6a70bd65e8148cb99bf9a05372
 }
 
 .aligned label:not(.vCheckboxLabel):after {
     content: '';
     display: inline-block;
     vertical-align: middle;
+<<<<<<< HEAD
+=======
     height: 1.625rem;
+>>>>>>> 19513a968a8bdf6a70bd65e8148cb99bf9a05372
 }
 
 .aligned label + p, .aligned .checkbox-row + div.help, .aligned label + div.readonly {
@@ -130,7 +165,13 @@ form .aligned div.help {
     padding-left: 10px;
 }
 
+<<<<<<< HEAD
+form .aligned p.date div.help.timezonewarning,
+form .aligned p.datetime div.help.timezonewarning,
+form .aligned p.time div.help.timezonewarning {
+=======
 form .aligned p.datetime div.help.timezonewarning {
+>>>>>>> 19513a968a8bdf6a70bd65e8148cb99bf9a05372
     margin-left: 0;
     padding-left: 0;
     font-weight: normal;
@@ -152,6 +193,13 @@ form .aligned select + div.help {
     padding-left: 10px;
 }
 
+<<<<<<< HEAD
+form .aligned select option:checked {
+    background-color: var(--selected-row);
+}
+
+=======
+>>>>>>> 19513a968a8bdf6a70bd65e8148cb99bf9a05372
 form .aligned ul li {
     list-style: none;
 }
@@ -162,11 +210,15 @@ form .aligned table p {
 }
 
 .aligned .vCheckboxLabel {
+<<<<<<< HEAD
+    padding: 1px 0 0 5px;
+=======
     float: none;
     width: auto;
     display: inline-block;
     vertical-align: -3px;
     padding: 0 0 5px 5px;
+>>>>>>> 19513a968a8bdf6a70bd65e8148cb99bf9a05372
 }
 
 .aligned .vCheckboxLabel + p.help,
@@ -188,6 +240,10 @@ fieldset .fieldBox {
     width: 200px;
 }
 
+<<<<<<< HEAD
+form .wide p.help,
+form .wide ul.errorlist,
+=======
 form .wide p,
 form .wide ul.errorlist,
 form .wide input + p.help,
@@ -196,6 +252,7 @@ form .wide input + div.help {
 }
 
 form .wide p.help,
+>>>>>>> 19513a968a8bdf6a70bd65e8148cb99bf9a05372
 form .wide div.help {
     padding-left: 50px;
 }
@@ -209,6 +266,18 @@ form div.help ul {
     width: 450px;
 }
 
+<<<<<<< HEAD
+/* COLLAPSIBLE FIELDSETS */
+
+.collapse summary .fieldset-heading,
+.collapse summary .inline-heading {
+    background: transparent;
+    border: none;
+    color: currentColor;
+    display: inline;
+    margin: 0;
+    padding: 0;
+=======
 /* COLLAPSED FIELDSETS */
 
 fieldset.collapsed * {
@@ -238,6 +307,7 @@ fieldset.collapsed .collapse-toggle {
     background: transparent;
     display: inline;
     color: var(--link-fg);
+>>>>>>> 19513a968a8bdf6a70bd65e8148cb99bf9a05372
 }
 
 /* MONOSPACE TEXTAREAS */
@@ -389,6 +459,18 @@ body.popup .submit-row {
     position: relative;
 }
 
+<<<<<<< HEAD
+.inline-related h4,
+.inline-related:not(.tabular) .collapse summary {
+    margin: 0;
+    color: var(--body-medium-color);
+    padding: 5px;
+    font-size: 0.8125rem;
+    background: var(--darkened-bg);
+    border: 1px solid var(--hairline-color);
+    border-left-color: var(--darkened-bg);
+    border-right-color: var(--darkened-bg);
+=======
 .inline-related h3 {
     margin: 0;
     color: var(--body-quiet-color);
@@ -397,6 +479,7 @@ body.popup .submit-row {
     background: var(--darkened-bg);
     border-top: 1px solid var(--hairline-color);
     border-bottom: 1px solid var(--hairline-color);
+>>>>>>> 19513a968a8bdf6a70bd65e8148cb99bf9a05372
 }
 
 .inline-related h3 span.delete {
@@ -415,6 +498,8 @@ body.popup .submit-row {
     width: 100%;
 }
 
+<<<<<<< HEAD
+=======
 .inline-related fieldset.module h3 {
     margin: 0;
     padding: 2px 5px 3px 5px;
@@ -425,6 +510,7 @@ body.popup .submit-row {
     color: var(--body-bg);
 }
 
+>>>>>>> 19513a968a8bdf6a70bd65e8148cb99bf9a05372
 .inline-group .tabular fieldset.module {
     border: none;
 }

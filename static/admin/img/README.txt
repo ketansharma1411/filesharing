@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+All icons are taken from Font Awesome (https://fontawesome.com/) project.
+=======
 All icons are taken from Font Awesome (http://fontawesome.io/) project.
+>>>>>>> 19513a968a8bdf6a70bd65e8148cb99bf9a05372
 The Font Awesome font is licensed under the SIL OFL 1.1:
 - https://scripts.sil.org/OFL
 
