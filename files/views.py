@@ -40,8 +40,8 @@ def upload_file(request):
             if len(files)==0:
                 return JsonResponse({'success': False, 'error': 'Please choose at least one file or folder before submitting.'})
 
-            if sum(file.size for file in files)>950 * 1024 * 1024:
-                return JsonResponse({'success': False, 'error': 'File size exceeds the maximum limit of 1GB.'})
+            # if sum(file.size for file in files)>950 * 1024 * 1024:
+            #     return JsonResponse({'success': False, 'error': 'File size exceeds the maximum limit of 1GB.'})
 
 
             s3_storage = S3Boto3Storage()  # Create an instance of S3 storage
