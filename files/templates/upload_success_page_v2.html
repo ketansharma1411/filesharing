@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -51,7 +52,81 @@
             gap: 1rem;
           }
         }
-        
+        .share_list{
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          justify-content: center;
+          align-items: center;
+          margin-bottom: 70px;
+        }
+        .share_list p{
+          font-size: 21px;
+          color: #000000a8;
+        }
+        .share_list img{
+          width: 39px;
+        }
+
+        .divider-container {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+        }
+
+        .divider-line {
+          flex: 1;
+          height: 2px;
+          background-color: #ff00001f; /* Light white color */
+          margin: 0 10px; /* Space between the text and the lines */
+        }
+
+        .divider-text {
+          font-size: 19px;
+          margin: 0;
+        }
+        .input-container {
+          margin-top: 10px;
+          display: flex;
+          gap: 5px;
+          width: 100%;
+        }
+
+        .input-container input {
+          padding: 8px;
+          /* width: 360px; */
+          width: 100%;
+          border: 1px solid #80808069;
+          border-radius: 4px;
+          font-size: 17px
+        }
+
+        .input-container button {
+          padding: 5px 10px;
+          background-color: #2f8cc2;
+          color: white;
+          border: 1px solid #80808045;
+          cursor: pointer;
+          border-radius: 4px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 55px;
+        }
+
+        .input-container button:hover {
+          background-color: #45a049;
+        }
+        .social-btn{
+          transition: transform 0.3s ease;
+        }
+        .social-btn.selected {
+          transform: scale(1.3); /* Scale the image when selected */
+        }
+
+
 
     </style>
     <style>
@@ -190,10 +265,55 @@
                   >
                     <i class="fa-solid fa-copy"></i>
                   </button></p>
-                <button class="btn"><a href="{% url 'upload_file' %}" style="background: #2f8cc2;
+
+                <div class="share_list text-[#637588] text-base" style="color: black;">
+                  
+                  <div class="divider-container">
+                    <span class="divider-line"></span>
+                    <p class="divider-text">Share Via</p>
+                    <span class="divider-line"></span>
+                  </div>
+                  
+                  <!-- <div class="flex gap-5">
+                    <button><img src="{% static 'fileshare_static/img/gmail-svgrepo-com.svg' %}" alt="Gmail Icon">
+                    </button>
+                    <button><img src="{% static 'fileshare_static/img/message-square-dots-svgrepo-com.svg' %}" alt="Message Icon"></i></button>
+                  </div> -->
+                  <div class="flex gap-5">
+                    <!-- Gmail button -->
+                    <button class="social-btn" id="gmail-btn">
+                      <img src="{% static 'fileshare_static/img/gmail-svgrepo-com.svg' %}" alt="Gmail Icon" style="width: 49px;">
+                    </button>
+                  
+                    <!-- Message button -->
+                    <button class="social-btn" id="message-btn">
+                      <img src="{% static 'fileshare_static/img/message-square-dots-svgrepo-com.svg' %}" alt="Message Icon">
+                    </button>
+
+                    <!-- QR Code button -->
+                    <button class="social-btn" id="qr-code-btn">
+                      <i class="fa-solid fa-qrcode" style="font-size: 30px;"></i>
+                    </button>
+                  </div>
+
+                  <!-- For QR Code Field -->
+                  <!-- QR Code Container (Initially Hidden) -->
+                  <div id="qr-code-container" style="display: none; margin-top: 10px;">
+                    <img id="qr-code-img" src="data:image/png;base64,{{ qr_code_data }}" alt="QR Code" style="width: 170px;">
+                  </div>
+
+                  <!-- For Input Email And Message Field -->
+                  <div id="input-container" class="input-container" style="display: none;">
+                    <input type="text" id="input-message" placeholder="Type your message here..." >
+                    <button id="send-btn"><i class="fa-regular fa-paper-plane"></i></button>
+                  </div>
+                </div>
+
+                <!-- <button class="btn"><a href="{% url 'upload_file' %}" style="background: #2f8cc2;
                     padding: 10px;
                     border-radius: 4px;
-                    color: white;">Go to Upload Page</a></button>
+                    color: white;">Go to Upload Page</a>
+                </button> -->
               </div>
             </div>
             
@@ -243,6 +363,8 @@
         </footer>
       </div>
     </div>
+
+    <!-- Copy Button -->
     <script>
         document.getElementById("copyButton").addEventListener("click", function() {
             const fileId = document.getElementById("fileId").innerText;
@@ -252,6 +374,91 @@
                 console.error("Failed to copy text: ", err);
             });
             });
+    </script>
+    
+    <!-- For Qr code -->
+    <script>
+      document.getElementById("qr-code-btn").addEventListener("click", function() {
+          var qrContainer = document.getElementById("qr-code-container");
+          var inputcontainer=document.getElementById('input-container');
+          document.getElementById('gmail-btn').classList.remove('selected');
+          document.getElementById('message-btn').classList.remove('selected');
+          document.getElementById('qr-code-btn').classList.add('selected');
+          if (qrContainer.style.display === "none") {
+              qrContainer.style.display = "block"; // Show QR Code
+              inputcontainer.style.display="none"; // Hide input container
+          } else {
+              document.getElementById('qr-code-btn').classList.remove('selected');
+              qrContainer.style.display = "none"; // Hide QR Code
+          }
+      });
+    </script>
+  
+    <!-- For Emailing and Messaging -->
+    <script>
+      let redirectUrl = ''; // Store the redirection URL
+      let inputField = '';  // Store the type of input field (email or phone)
+      let file_id='{{file_id}}';
+      // console.log(file_id)
+
+      document.getElementById('gmail-btn').addEventListener('click', function() {
+        toggleInputField('Gmail');
+        redirectUrl = "{% url 'email_send' %}"; // Django URL for sending message
+        inputField = 'email'; // Set input type to email
+        toggleImageScale('gmail-btn'); // Add scaling effect to Gmail icon
+      });
+
+      document.getElementById('message-btn').addEventListener('click', function() {
+        toggleInputField('Message');
+        redirectUrl = "{% url 'send_message' %}"; // Django URL for sending message
+        inputField = 'phone'; // Set input type to phone number
+        toggleImageScale('message-btn'); // Add scaling effect to Message icon
+      });
+
+      function toggleInputField(source) {
+        const inputContainer = document.getElementById('input-container');
+        const inputMessage = document.getElementById('input-message');
+        const qrContainer = document.getElementById('qr-code-container');
+        inputContainer.style.display = 'flex'; // Show the input field
+        qrContainer.style.display='none'; // Hide QR code container
+
+        if (source === 'Gmail') {
+          inputMessage.type = 'email'; // Change input type to email for Gmail
+          inputMessage.placeholder = "Enter your email address...";
+        } else if (source === 'Message') {
+          inputMessage.type = 'tel'; // Change input type to tel for phone number
+          inputMessage.placeholder = "Enter your phone number...";
+        }
+      }
+
+      function toggleImageScale(iconId) {
+        // console.log('toogle image scaling',iconId)
+        // Reset the scale of both images
+        document.getElementById('gmail-btn').classList.remove('selected');
+        document.getElementById('message-btn').classList.remove('selected');
+        document.getElementById('qr-code-btn').classList.remove('selected');
+
+        // Add the 'selected' class to the clicked image to apply scaling
+        document.getElementById(iconId).classList.add('selected');
+      }
+
+      document.getElementById('send-btn').addEventListener('click', function() {
+        const message = document.getElementById('input-message').value;
+        if (message && message.length >= 9) {
+          alert("Message Sent: " + message);
+          document.getElementById('input-message').value = ''; // Clear input after sending
+
+          // Construct the URL with query parameters (email or phone and message)
+          const encodedMessage = encodeURIComponent(message);
+          const url = `${redirectUrl}?message=${encodedMessage}&key=${file_id}`;
+
+          // Redirect to the Django URL with the form data as query parameters
+          window.location.href = url; // Perform the redirection
+        } else {
+          alert("Please type a message before sending.");
+        }
+      });
+
     </script>
   </body>
 </html>

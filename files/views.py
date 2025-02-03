@@ -18,6 +18,12 @@ from urllib.parse import quote,unquote
 from urllib.parse import urlparse
 import zipfile
 import io
+import qrcode
+from io import BytesIO
+from twilio.rest import Client
+from django.core.mail import send_mail
+from django.conf import settings
+import base64
 
 def upload_file(request):
     if request.method == 'POST':
@@ -34,6 +40,8 @@ def upload_file(request):
             if len(files)==0:
                 return JsonResponse({'success': False, 'error': 'Please choose at least one file or folder before submitting.'})
 
+            # if sum(file.size for file in files)>950 * 1024 * 1024:
+            #     return JsonResponse({'success': False, 'error': 'File size exceeds the maximum limit of 1GB.'})
 
 
             s3_storage = S3Boto3Storage()  # Create an instance of S3 storage
@@ -108,7 +116,12 @@ def display_files(request):
         
         # Render the page with the list of files
         return render(request, 'download_page_v2.html', {'files': files, 'file_id': file_id})
-
+    
+    file_id=request.GET.get('key') or None
+    if file_id:
+        files = FileUpload.objects.filter(file_id=file_id)
+        return render(request, 'download_page_v2.html', {'files': files, 'file_id': file_id})
+    
     # If GET request, just render the empty form
     return render(request, 'download_page_v2.html')
 
@@ -163,8 +176,108 @@ def download_file(request, file_id, ID):
 def about(request):
     return render(request, 'home_page_v2.html')
 
+
+def generate_qr_code(data):
+    qr = qrcode.make(data)
+    buffer = BytesIO()
+    qr.save(buffer, format="PNG")
+    buffer.seek(0)  # Reset buffer position
+    qr_code_base64 = base64.b64encode(buffer.getvalue()).decode('utf-8')  # Encode properly
+    return qr_code_base64
+
+
 def upload_success(request,file_id):
-    return render(request, 'upload_success_page_v2.html', {'file_id': file_id})
+    file_url = f"https://filezap.duckdns.org/display/?key={file_id}"
+    qr_code_data = generate_qr_code(file_url)
+    print("hello",qr_code_data)
+    return render(request, 'upload_success_page_v2.html', {'file_id': file_id,'qr_code_data': qr_code_data})
+
+
+
+# gmail sending utility
+def send_user_email(user_email, subject, message):
+    """Send an email to the user."""
+    # print('this is the user email',settings.EMAIL_HOST_PASSWORD)
+    try:
+        send_mail(
+            subject,
+            message,
+            settings.EMAIL_HOST_USER,  # Sender
+            [user_email],  # Receiver
+            fail_silently=False,
+        )
+        # print('TRUE the email has been sent successfully!!')
+        return True
+    except Exception as e:
+        print(f"Error sending email: {e}")
+        return False
+
+def email_send(request):
+    user_email = request.GET.get('message')  # Get user email
+    key= request.GET.get('key') 
+    subject = "Your File is Uploaded!"
+    # message = f"Your file has been successfully uploaded. You can download it using this ID: {key}"
+    file_url = f"https://filezap.duckdns.org/display/?key={key}"
+    message = f"""
+    Dear User,
+
+    Your file has been successfully uploaded. Here are the details:
+
+    📂 File ID: {key}
+    🔗 Download Link: {file_url}
+
+    You can use the file ID to retrieve your file anytime.
+
+    Best Regards,
+    Your File Sharing Team
+    """
+
+
+    # Send email
+    send_user_email(user_email, subject, message)
+    return redirect('about')
+    # return HttpResponse("Email sent successfully!")
+
+
+# FOR MESSAGING
+def send_sms_twilio(to_phone_number, message_body):
+    # Your Twilio account SID and Auth Token
+    account_sid = config('TWILIO_ACCOUNT_SID')
+    auth_token = config('TWILLO_AUTH_TOKEN')
+    
+    # Initialize the Twilio client
+    client = Client(account_sid, auth_token)
+    
+    # Send the message
+    message = client.messages.create(
+        body=message_body,          # The content of the message
+        from_='+12767884701',         # Your Twilio phone number (provided by Twilio)
+        to=to_phone_number          # The recipient's phone number
+    )
+
+    # Print message SID (optional)
+    print(f"Message sent successfully! SID: {message.sid}")
+
+def send_sms(request):
+    phone_number=request.GET.get('message')
+    key= request.GET.get('key') 
+    message = (
+        f"Dear User,\n\n"
+        f"We are pleased to inform you that your requested file is ready for download. "
+        f"Please use the following unique file ID to access and download your file:\n\n"
+        f"File ID: {key}\n\n"
+        f"To download the file, visit the link below:\n"
+        f"https://filezap.duckdns.org/display/?key={key}\n\n"
+        f"Thank you for using our service. If you have any questions, feel free to contact us.\n\n"
+        f"Best regards,\n"
+        f"FileZap"
+    )
+    try:
+        send_sms_twilio(phone_number, message)
+        return HttpResponse("SMS sent successfully!")
+    except Exception as e:
+        return HttpResponse(f"SMS sent failure!{e}", status=500)
+
 
 def community(request):
     return render(request, 'community_page_v2.html')
@@ -196,3 +309,7 @@ def testing(request):
     except Exception as e:
         print("Error:", e)
         return HttpResponse(f"Error: {e}", status=500)
+
+
+
+
