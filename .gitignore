@@ -6,3 +6,5 @@ test.txt
 __pycache__/
 *.pyc
 *.pyo
+# static/
+collected_static/

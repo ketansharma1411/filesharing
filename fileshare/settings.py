@@ -144,8 +144,20 @@ USE_TZ = True
 
 # Static files settings
 
-STATIC_ROOT = os.path.join(BASE_DIR,'static')
-STATIC_URL = 'static/'
+# STATIC_ROOT = os.path.join(BASE_DIR,'static')
+STATIC_URL = '/static/'
+
+
+# If you're using additional directories for static files, specify them here
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+# In production, make sure you've configured `STATIC_ROOT`
+STATIC_ROOT = os.path.join(BASE_DIR, 'collected_static')  # Only needed for production
+
+
+
+
+
 # STATICFILES_DIRS=[os.path.join(BASE_DIR,'fileshare/static')]
 # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
@@ -169,3 +181,13 @@ AWS_DEFAULT_ACL =  None
 # AWS_S3_VERITY = True
 AWS_S3_VERIFY = True
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+
+# Email verification
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'  # Use your SMTP server
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = config('SENDER_EMAIL')  # Replace with your email
+EMAIL_HOST_PASSWORD = config('APP_PASSWORD')  # Use an app password, not your main password
+
