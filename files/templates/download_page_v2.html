@@ -207,7 +207,7 @@
                 {% for file in files %}
                 <div class="single_file">
                     {% if file.file.name %}
-                        <p>{{ file.file.name }}</p>
+                        <p>{{ file.file.name|truncatechars:30 }}</p>
                     {% else %}
                         fileshare_file_{{file_id}}.zip
                     {% endif %}
