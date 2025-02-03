@@ -274,6 +274,7 @@ def send_sms(request):
     )
     try:
         send_sms_twilio(phone_number, message)
+        return redirect('about')
         return HttpResponse("SMS sent successfully!")
     except Exception as e:
         return HttpResponse(f"SMS sent failure!{e}", status=500)
