@@ -24,6 +24,7 @@ from twilio.rest import Client
 from django.core.mail import send_mail
 from django.conf import settings
 import base64
+import threading
 
 def upload_file(request):
     if request.method == 'POST':
@@ -189,7 +190,7 @@ def generate_qr_code(data):
 def upload_success(request,file_id):
     file_url = f"https://filezap.duckdns.org/display/?key={file_id}"
     qr_code_data = generate_qr_code(file_url)
-    print("hello",qr_code_data)
+    # print("hello",qr_code_data)
     return render(request, 'upload_success_page_v2.html', {'file_id': file_id,'qr_code_data': qr_code_data})
 
 
@@ -197,20 +198,25 @@ def upload_success(request,file_id):
 # gmail sending utility
 def send_user_email(user_email, subject, message):
     """Send an email to the user."""
-    # print('this is the user email',settings.EMAIL_HOST_PASSWORD)
-    try:
-        send_mail(
-            subject,
-            message,
-            settings.EMAIL_HOST_USER,  # Sender
-            [user_email],  # Receiver
-            fail_silently=False,
-        )
-        # print('TRUE the email has been sent successfully!!')
-        return True
-    except Exception as e:
-        print(f"Error sending email: {e}")
-        return False
+    def send_email():
+        try:
+            send_mail(
+                subject,
+                message,
+                settings.EMAIL_HOST_USER,  # Sender
+                [user_email],  # Receiver
+                fail_silently=False,
+            )
+            # print('TRUE the email has been sent successfully!!')
+            # return True
+        except Exception as e:
+            print(f"Error sending email: {e}")
+            # return False
+    # Run the send_email function in a new thread
+    email_thread = threading.Thread(target=send_email)
+    email_thread.start()
+    return True
+
 
 def email_send(request):
     user_email = request.GET.get('message')  # Get user email
@@ -260,6 +266,14 @@ def send_sms_twilio(to_phone_number, message_body):
 
 def send_sms(request):
     phone_number=request.GET.get('message')
+    if phone_number.startswith('0'):
+        phone_number = phone_number[1:]
+    elif phone_number.startswith('+91'):
+        phone_number = phone_number[3:]
+    elif phone_number.startswith('91'):
+        phone_number = phone_number[2:]
+    
+    phone_number = '+91' + phone_number
     key= request.GET.get('key') 
     message = (
         f"Dear User,\n\n"
@@ -275,9 +289,10 @@ def send_sms(request):
     try:
         send_sms_twilio(phone_number, message)
         return redirect('about')
-        return HttpResponse("SMS sent successfully!")
+        # return HttpResponse("SMS sent successfully!")
     except Exception as e:
-        return HttpResponse(f"SMS sent failure!{e}", status=500)
+        return redirect('about')
+        # return HttpResponse(f"SMS sent failure!{e}", status=500)
 
 
 def community(request):

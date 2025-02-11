@@ -274,11 +274,7 @@
                     <span class="divider-line"></span>
                   </div>
                   
-                  <!-- <div class="flex gap-5">
-                    <button><img src="{% static 'fileshare_static/img/gmail-svgrepo-com.svg' %}" alt="Gmail Icon">
-                    </button>
-                    <button><img src="{% static 'fileshare_static/img/message-square-dots-svgrepo-com.svg' %}" alt="Message Icon"></i></button>
-                  </div> -->
+                  
                   <div class="flex gap-5">
                     <!-- Gmail button -->
                     <button class="social-btn" id="gmail-btn">
@@ -291,14 +287,14 @@
                     </button>
 
                     <!-- QR Code button -->
-                    <button class="social-btn" id="qr-code-btn">
+                    <button class="social-btn selected" id="qr-code-btn">
                       <i class="fa-solid fa-qrcode" style="font-size: 30px;"></i>
                     </button>
                   </div>
 
                   <!-- For QR Code Field -->
                   <!-- QR Code Container (Initially Hidden) -->
-                  <div id="qr-code-container" style="display: none; margin-top: 10px;">
+                  <div id="qr-code-container" style="display: block; margin-top: 10px;">
                     <img id="qr-code-img" src="data:image/png;base64,{{ qr_code_data }}" alt="QR Code" style="width: 170px;">
                   </div>
 
